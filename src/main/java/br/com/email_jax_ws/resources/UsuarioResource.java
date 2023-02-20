@@ -85,9 +85,8 @@ public class UsuarioResource {
                         UriBuilder.fromUri("http://localhost:8080/")
                                 .path("usuario"))
                         .type("GET").type("POST").type("PUT").type("DELETE").build();
-
-                return Response.status(Response.Status.OK)
-                        .entity("{\n \"token\" : \"" + jwtToken + "\" \n \"id\":" + id + "}").links(link).build();
+                String response = "{\"token\":\"" + jwtToken + "\",\"id\":" + id + "}";
+                return Response.status(Response.Status.OK).entity(response).links(link).build();
             }
 
         } catch (Exception ex) {

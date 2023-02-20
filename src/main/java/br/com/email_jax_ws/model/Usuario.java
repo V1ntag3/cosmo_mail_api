@@ -6,7 +6,8 @@ public class Usuario {
     private String email;
     private String telefone;
     private String senha;
-
+    public int[] mensagens;
+    
     public String getSenha() {
         return senha;
     }

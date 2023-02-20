@@ -74,7 +74,9 @@ public class DAOUsuario {
         try {
 
             ResultSet rs = ps.executeQuery(sql);
+
             while (rs.next()) {
+
                 return rs.getInt("id");
             }
 

@@ -14,20 +14,22 @@ import br.com.email_jax_ws.model.*;
 public class DAOMensagem {
     public boolean mandarMensagem(Mensagem msg) throws SQLException {
 
-        String sql = "insert into mensagem (id, remetente_id, destinatario_id, assunto, corpo, data) values "
-                + "(nextval('serial'), ?, ?, ?, ?,?);";
-
+        String sql = "insert into mensagem (id, remetente_id, destinatario_id, assunto, corpo, data, email_destinatario) values "
+                + "(nextval('serial'), ?, ?, ?, ?,?,?);";
+      
         Connection con = Conexao.getConnection();
         PreparedStatement ps = con.prepareStatement(sql);
         long millis = System.currentTimeMillis();
         Date dte = new Date(millis);
+        
         try {
-
             ps.setInt(1, msg.getRemetente_id());
             ps.setInt(2, msg.getDestinatario_id());
             ps.setString(3, msg.getAssunto());
             ps.setString(4, msg.getCorpo());
             ps.setDate(5, dte);
+            ps.setString(6, msg.getEmail_destinatario());
+        
             ps.execute();
 
             return true;
@@ -41,15 +43,14 @@ public class DAOMensagem {
         return false;
     }
 
-    public Mensagem mensagem(Integer remetente_id) throws SQLException {
+    public Mensagem mensagem(Integer id) throws SQLException {
         String sql = "select * from mensagem where "
-                + "(destinatario_id = " + remetente_id + ");";
+                + "(id = " + id + ");";
 
         Connection con = Conexao.getConnection();
         Statement ps = con.createStatement();
 
         try {
-
             ResultSet rs = ps.executeQuery(sql);
             Mensagem msg = new Mensagem();
             while (rs.next()) {
@@ -59,6 +60,7 @@ public class DAOMensagem {
                 msg.setAssunto(rs.getString("assunto"));
                 msg.setCorpo(rs.getString("corpo"));
                 msg.setData(rs.getDate("data"));
+                msg.setEmail_destinatario(rs.getString("email_destinatario"));
 
             }
             return msg;
@@ -88,6 +90,8 @@ public class DAOMensagem {
                 msg.setRemetente_id(rs.getInt("remetente_id"));
                 msg.setAssunto(rs.getString("assunto"));
                 msg.setCorpo(rs.getString("corpo"));
+                msg.setData(rs.getDate("data"));
+                msg.setEmail_destinatario(rs.getString("email_destinatario"));
                 msgArray.add(msg);
             }
             return msgArray;
@@ -117,6 +121,8 @@ public class DAOMensagem {
                 msg.setRemetente_id(rs.getInt("remetente_id"));
                 msg.setAssunto(rs.getString("assunto"));
                 msg.setCorpo(rs.getString("corpo"));
+                msg.setData(rs.getDate("data"));
+                msg.setEmail_destinatario(rs.getString("email_destinatario"));
                 msgArray.add(msg);
             }
             return msgArray;
