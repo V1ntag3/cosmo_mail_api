@@ -10,9 +10,9 @@ import br.com.email_jax_ws.conexao.*;
 import br.com.email_jax_ws.model.Usuario;
 
 public class DAOUsuario {
-
+// Função de criação de usuario no banco de dados
     public boolean criarUsuario(String nome, String email, String telefone , String senha ) throws SQLException {
-        System.out.println("here");
+
         String sql = "insert into usuario (id, nome, email, telefone, senha) values "
                 + "(nextval('serial'), ?, ?, ?, ?);";
 
@@ -37,7 +37,7 @@ public class DAOUsuario {
 
         return false;
     }
-
+//  Pegar dados de usuario
     public Integer pegarUsuario(String email, String senha) throws SQLException {
 
         String sql = "select id from usuario where "
@@ -45,7 +45,7 @@ public class DAOUsuario {
 
         Connection con = Conexao.getConnection();
         Statement ps = con.createStatement();
-        System.out.println(sql);
+
         try {
 
             

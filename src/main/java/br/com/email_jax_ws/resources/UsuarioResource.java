@@ -52,7 +52,7 @@ public class UsuarioResource {
         }
         try {
             _repositorio.criarUsuario(usuario.getNome(), usuario.getEmail(), usuario.getTelefone(), usuario.getSenha());
-            return Response.status(Response.Status.CREATED).entity("Usuario Criado").build();
+            return Response.status(Response.Status.CREATED).entity("Usuário Criado").build();
         } catch (Exception ex) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
@@ -85,8 +85,8 @@ public class UsuarioResource {
                         UriBuilder.fromUri("http://localhost:8080/")
                                 .path("usuario"))
                         .type("GET").type("POST").type("PUT").type("DELETE").build();
-
-                return Response.status(Response.Status.CREATED).entity(jwtToken).links(link).build();
+             
+                return Response.status(Response.Status.OK).entity("{\n \"token\" : \"" + jwtToken + "\" \n \"id\":" + id + "}").links(link).build();
             }
 
         } catch (Exception ex) {
