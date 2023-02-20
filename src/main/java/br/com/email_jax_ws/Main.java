@@ -16,7 +16,9 @@ public class Main {
     public static final String BASE_URI = "http://localhost:8080/";
 
     /**
-     * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
+     * Starts Grizzly HTTP server exposing JAX-RS resources defined in this
+     * application.
+     * 
      * @return Grizzly HTTP server.
      */
     public static HttpServer startServer() {
@@ -31,6 +33,7 @@ public class Main {
 
     /**
      * Main method.
+     * 
      * @param args
      * @throws IOException
      */
@@ -42,4 +45,3 @@ public class Main {
         server.shutdownNow();
     }
 }
-

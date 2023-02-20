@@ -85,14 +85,16 @@ public class UsuarioResource {
                         UriBuilder.fromUri("http://localhost:8080/")
                                 .path("usuario"))
                         .type("GET").type("POST").type("PUT").type("DELETE").build();
-             
-                return Response.status(Response.Status.OK).entity("{\n \"token\" : \"" + jwtToken + "\" \n \"id\":" + id + "}").links(link).build();
+
+                return Response.status(Response.Status.OK)
+                        .entity("{\n \"token\" : \"" + jwtToken + "\" \n \"id\":" + id + "}").links(link).build();
             }
 
         } catch (Exception ex) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
     }
+
     @Authorize
     @PUT
     @Path("update")
@@ -120,6 +122,7 @@ public class UsuarioResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
     }
+
     @Authorize
     @DELETE
     @Path("delete/{id}")

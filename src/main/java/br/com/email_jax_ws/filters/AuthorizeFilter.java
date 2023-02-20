@@ -20,22 +20,22 @@ import javax.ws.rs.core.Response;
 @Authorize
 @Priority(Priorities.AUTHENTICATION)
 public class AuthorizeFilter implements ContainerRequestFilter {
-    private final SecretKey CHAVE = 
-            Keys.hmacShaKeyFor("7f-j&amp;CKk=coNzZc0y7_4obMP?#TfcYq%fcD0mDpenW2nc!lfGoZ|d?f&amp;RNbDHUX6"
-                                .getBytes(StandardCharsets.UTF_8));
+    private final SecretKey CHAVE = Keys
+            .hmacShaKeyFor("7f-j&amp;CKk=coNzZc0y7_4obMP?#TfcYq%fcD0mDpenW2nc!lfGoZ|d?f&amp;RNbDHUX6"
+                    .getBytes(StandardCharsets.UTF_8));
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        
+
         try {
             String token = authorizationHeader.substring("Bearer".length()).trim();
-            
+
             Jwts.parserBuilder().setSigningKey(CHAVE).build().parseClaimsJws(token);
         } catch (Exception e) {
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         }
 
     }
-    
+
 }
