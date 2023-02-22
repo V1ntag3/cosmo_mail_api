@@ -95,7 +95,7 @@ public class DAOUsuario {
                 + "(id = " + id + ");";
 
         Connection con = Conexao.getConnection();
-        PreparedStatement ps = con.prepareStatement(sql);
+        Statement ps = con.createStatement();
 
         try {
 

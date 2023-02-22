@@ -10,9 +10,28 @@ public class Mensagem {
     private String assunto;
     private String corpo;
     private String email_destinatario;
+    public int[] mensagens;
+    private Boolean apagado_destinatario;
+    private Boolean apagado_remetente;
 
     public Integer getId() {
         return id;
+    }
+
+    public Boolean getApagado_destinatario() {
+        return apagado_destinatario;
+    }
+
+    public void setApagado_destinatario(Boolean apagado_destinatario) {
+        this.apagado_destinatario = apagado_destinatario;
+    }
+
+    public Boolean getApagado_remetente() {
+        return apagado_remetente;
+    }
+
+    public void setApagado_remetente(Boolean apagado_remetente) {
+        this.apagado_remetente = apagado_remetente;
     }
 
     public Date getData() {

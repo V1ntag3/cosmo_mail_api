@@ -6,7 +6,7 @@ public class Usuario {
     private String email;
     private String telefone;
     private String senha;
-    public int[] mensagens;
+    private String token;
     
     public String getSenha() {
         return senha;
@@ -30,6 +30,14 @@ public class Usuario {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getNome() {

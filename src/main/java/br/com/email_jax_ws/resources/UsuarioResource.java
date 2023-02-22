@@ -8,14 +8,11 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
-// import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-// import javax.ws.rs.GET;
+
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-// import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -23,8 +20,6 @@ import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-
-// import br.com.email_jax_ws.model.Usuario;
 
 import br.com.email_jax_ws.dao.*;
 import br.com.email_jax_ws.filters.Authorize;
@@ -85,8 +80,10 @@ public class UsuarioResource {
                         UriBuilder.fromUri("http://localhost:8080/")
                                 .path("usuario"))
                         .type("GET").type("POST").type("PUT").type("DELETE").build();
-                String response = "{\"token\":\"" + jwtToken + "\",\"id\":" + id + "}";
-                return Response.status(Response.Status.OK).entity(response).links(link).build();
+
+                Usuario userData = _repositorio.pegarUsuarioId(id);
+                userData.setToken(jwtToken);
+                return Response.status(Response.Status.OK).entity(userData).links(link).build();
             }
 
         } catch (Exception ex) {
@@ -121,6 +118,8 @@ public class UsuarioResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
     }
+
+
 
     @Authorize
     @DELETE
