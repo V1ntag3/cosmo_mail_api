@@ -13,23 +13,18 @@ import br.com.email_jax_ws.model.*;
 
 public class DAOMensagem {
     public boolean mandarMensagem(Mensagem msg) throws SQLException {
+               long millis = System.currentTimeMillis();
+        Date dte = new Date(millis);
 
-        String sql = "insert into mensagem (id, remetente_id, destinatario_id, assunto, corpo, data, email_destinatario) values "
-                + "(nextval('serial'), ?, ?, ?, ?,?,?);";
-      
+        String sql = "insert into mensagem ( remetente_id, destinatario_id, nome_destinatario, nome_remetente , assunto, corpo, data, email_destinatario) values "
+                + "("+msg.getRemetente_id()+", "+msg.getDestinatario_id()+", '"+msg.getNome_destinatario()+"', '"+msg.getNome_remetente()+"', '"+msg.getAssunto()+"','"+msg.getCorpo()+"','"+dte+"','"+msg.getEmail_destinatario()+"');";
+
         Connection con = Conexao.getConnection();
         PreparedStatement ps = con.prepareStatement(sql);
-        long millis = System.currentTimeMillis();
-        Date dte = new Date(millis);
-        
+     
+
         try {
-            ps.setInt(1, msg.getRemetente_id());
-            ps.setInt(2, msg.getDestinatario_id());
-            ps.setString(3, msg.getAssunto());
-            ps.setString(4, msg.getCorpo());
-            ps.setDate(5, dte);
-            ps.setString(6, msg.getEmail_destinatario());
-        
+
             ps.execute();
 
             return true;
@@ -61,7 +56,8 @@ public class DAOMensagem {
                 msg.setCorpo(rs.getString("corpo"));
                 msg.setData(rs.getDate("data"));
                 msg.setEmail_destinatario(rs.getString("email_destinatario"));
-
+                msg.setNome_destinatario(rs.getString("nome_destinatario"));
+                msg.setNome_remetente(rs.getString("nome_remetente"));
             }
             return msg;
         } catch (SQLException e) {
@@ -83,7 +79,7 @@ public class DAOMensagem {
         try {
 
             ResultSet rs = ps.executeQuery(sql);
-            
+
             while (rs.next()) {
                 Mensagem msg = new Mensagem();
                 msg.setId(rs.getInt("id"));
@@ -93,6 +89,8 @@ public class DAOMensagem {
                 msg.setCorpo(rs.getString("corpo"));
                 msg.setData(rs.getDate("data"));
                 msg.setEmail_destinatario(rs.getString("email_destinatario"));
+                msg.setNome_destinatario(rs.getString("nome_destinatario"));
+                msg.setNome_remetente(rs.getString("nome_remetente"));
                 msgArray.add(msg);
             }
             return msgArray;
@@ -125,7 +123,8 @@ public class DAOMensagem {
                 msg.setCorpo(rs.getString("corpo"));
                 msg.setData(rs.getDate("data"));
                 msg.setEmail_destinatario(rs.getString("email_destinatario"));
-
+                msg.setNome_destinatario(rs.getString("nome_destinatario"));
+                msg.setNome_remetente(rs.getString("nome_remetente"));
                 msgArray.add(msg);
             }
             return msgArray;
@@ -139,13 +138,14 @@ public class DAOMensagem {
     }
 
     public boolean deletarMensagem(Integer id, Integer tipo) throws SQLException {
-        String sql;
-        if(tipo == 1){
-            sql = "update mensagem set apagado_destinatario = ? where "
-            + "(id = ?);";
-        }else{
-            sql = "update mensagem set apagado_remetente = ? where "
-            + "(id = ?);";
+        String sql = "";
+        if (tipo == 1) {
+            sql = "update mensagem set apagado_destinatario = true where "
+                    + "(id = "+id+");";
+        }
+        if (tipo == 2) {
+            sql = "update mensagem set apagado_remetente = true where "
+                    + "(id = "+id+");";
         }
 
         Connection con = Conexao.getConnection();
@@ -153,7 +153,6 @@ public class DAOMensagem {
 
         try {
 
-            ps.setBoolean(1, true);
             ps.execute();
 
             return true;

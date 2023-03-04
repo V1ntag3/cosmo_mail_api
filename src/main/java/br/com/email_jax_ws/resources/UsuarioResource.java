@@ -42,6 +42,7 @@ public class UsuarioResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postRegister(Usuario usuario) throws SQLException {
+      
         if (_repositorio.pegarUsuarioEmail(usuario.getEmail()) != null) {
             return Response.status(Response.Status.NOT_FOUND).entity("Email já utilizado").build();
         }

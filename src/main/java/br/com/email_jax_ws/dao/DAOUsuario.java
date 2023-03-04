@@ -10,21 +10,17 @@ import br.com.email_jax_ws.conexao.*;
 import br.com.email_jax_ws.model.Usuario;
 
 public class DAOUsuario {
+
     // Função de criação de usuario no banco de dados
     public boolean criarUsuario(String nome, String email, String telefone, String senha) throws SQLException {
 
-        String sql = "insert into usuario (id, nome, email, telefone, senha) values "
-                + "(nextval('serial'), ?, ?, ?, ?);";
+        String sql = "insert into usuario ( nome, email, telefone, senha) values "
+                + "('"+ nome +"', '"+ email +"', '"+ telefone  +"', '"+ senha +"');";
 
         Connection con = Conexao.getConnection();
         PreparedStatement ps = con.prepareStatement(sql);
 
         try {
-
-            ps.setString(1, nome);
-            ps.setString(2, email);
-            ps.setString(3, telefone);
-            ps.setString(4, senha);
             ps.execute();
 
             return true;
@@ -63,9 +59,9 @@ public class DAOUsuario {
         return null;
     }
 
-    public Integer pegarUsuarioEmail(String email) throws SQLException {
+    public Usuario pegarUsuarioEmail(String email) throws SQLException {
 
-        String sql = "select id from usuario where "
+        String sql = "select * from usuario where "
                 + "(email = '" + email + "');";
 
         Connection con = Conexao.getConnection();
@@ -74,10 +70,11 @@ public class DAOUsuario {
         try {
 
             ResultSet rs = ps.executeQuery(sql);
-
+            Usuario user = new Usuario();
             while (rs.next()) {
-
-                return rs.getInt("id");
+                user.setId(rs.getInt("id"));
+                user.setNome(rs.getString(("nome")));
+                return user;
             }
 
         } catch (SQLException e) {
@@ -120,14 +117,13 @@ public class DAOUsuario {
 
     public boolean updateUsuarioNome(Integer id, String nome) throws SQLException {
 
-        String sql = "update usuario set nome = ? where "
-                + "(id = ?);";
+        String sql = "update usuario set nome = '"+ nome + "' where "
+                + "(id = "+ id +");";
 
         Connection con = Conexao.getConnection();
         PreparedStatement ps = con.prepareStatement(sql);
         try {
-            ps.setString(1, nome);
-            ps.setInt(2, id);
+   
             ps.execute();
 
             return true;
@@ -143,8 +139,8 @@ public class DAOUsuario {
 
     public boolean updateUsuarioEmail(Integer id, String email) throws SQLException {
 
-        String sql = "update usuario set email = ? where "
-                + "(id = ?);";
+        String sql = "update usuario set email = '"+ email + "' where "
+                + "(id = "+ id +");";
 
         Connection con = Conexao.getConnection();
         PreparedStatement ps = con.prepareStatement(sql);
@@ -167,8 +163,8 @@ public class DAOUsuario {
 
     public boolean updateUsuarioTelefone(Integer id, String telefone) throws SQLException {
 
-        String sql = "update usuario set telefone = ? where "
-                + "(id = ?);";
+        String sql = "update usuario set telefone = '"+ telefone + "' where "
+                + "(id = "+ id +");";
 
         Connection con = Conexao.getConnection();
         PreparedStatement ps = con.prepareStatement(sql);
@@ -191,8 +187,8 @@ public class DAOUsuario {
 
     public boolean updateUsuarioSenha(Integer id, String senha) throws SQLException {
 
-        String sql = "update usuario set senha = ? where "
-                + "(id = ?);";
+        String sql = "update usuario set senha = '"+ senha + "' where "
+                + "(id = "+id+");";
 
         Connection con = Conexao.getConnection();
         PreparedStatement ps = con.prepareStatement(sql);
@@ -216,7 +212,7 @@ public class DAOUsuario {
     public boolean deletarUsuario(Integer id) throws SQLException {
 
         String sql = "delete from usuario where "
-                + "(id = ?);";
+                + "(id = "+id+");";
 
         Connection con = Conexao.getConnection();
         PreparedStatement ps = con.prepareStatement(sql);

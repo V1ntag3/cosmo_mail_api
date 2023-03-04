@@ -1,6 +1,7 @@
 package br.com.email_jax_ws.resources;
 
 import java.sql.SQLException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.Response;
 import br.com.email_jax_ws.dao.*;
 import br.com.email_jax_ws.filters.Authorize;
 import br.com.email_jax_ws.model.Mensagem;
+import br.com.email_jax_ws.model.Usuario;
 
 
 @Path("mensagem")
@@ -27,11 +29,12 @@ public class MensagemResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postEnviarMensagem(Mensagem msg) throws SQLException {
-        Integer destinario_id = _repositorio.pegarUsuarioEmail(msg.getEmail_destinatario());
-        if (destinario_id == null) {
+        Usuario dest = _repositorio.pegarUsuarioEmail(msg.getEmail_destinatario());
+        if (dest.getId() == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("Destinatário não encontrado").build();
         } else {
-            msg.setDestinatario_id(destinario_id);
+            msg.setDestinatario_id(dest.getId());
+            msg.setNome_destinatario(dest.getNome());
             try {
                 _repositorio_men.mandarMensagem(msg);
                 return Response.status(Response.Status.OK).entity("Mensagem Enviada").build();
@@ -71,11 +74,12 @@ public class MensagemResource {
                 response += ",{\"id\" :" + mensagem.getId() + ", \"assunto\": \"" + mensagem.getAssunto()
                         + "\",\"corpo\": \"" + mensagem.getCorpo() + "\", \"data\": \" " + mensagem.getData()
                         + "\",\"email_dest\": \"" + mensagem.getEmail_destinatario() + "\",\"id_destinatario\": "
-                        + mensagem.getDestinatario_id() + ",\"id_remetente\": " + mensagem.getRemetente_id() + "}";
+                        + mensagem.getDestinatario_id() + ",\"id_remetente\": " + mensagem.getRemetente_id() + ",\"nome_remetente\": \"" + mensagem.getNome_remetente() +"\" ,\"nome_destinatario\": \"" + mensagem.getNome_destinatario() +"\"}";
             }
         }
         response += "]}";
         response = response.replaceFirst(",", "");
+
         try {
             return Response.status(Response.Status.OK).entity(response).build();
         } catch (Exception ex) {
@@ -98,7 +102,7 @@ public class MensagemResource {
                 response += ",{\"id\" :" + mensagem.getId() + ", \"assunto\": \"" + mensagem.getAssunto()
                         + "\",\"corpo\": \"" + mensagem.getCorpo() + "\", \"data\": \" " + mensagem.getData()
                         + "\",\"email_dest\": \"" + mensagem.getEmail_destinatario() + "\",\"id_destinatario\": "
-                        + mensagem.getDestinatario_id() + ",\"id_remetente\": " + mensagem.getRemetente_id() + "}";
+                        + mensagem.getDestinatario_id() + ",\"id_remetente\": " + mensagem.getRemetente_id() +",\"nome_remetente\": \"" + mensagem.getNome_remetente() +"\",\"nome_destinatario\": \"" + mensagem.getNome_destinatario() + "\"}";
             }
         }
         response += "]}";
@@ -118,6 +122,7 @@ public class MensagemResource {
     public Response delete(Mensagem men) {
 
         try {
+            System.out.println(men.getApagado_destinatario());
             if (men.getApagado_destinatario() == true) {
                 for (Integer item : men.mensagens) {
                     _repositorio_men.deletarMensagem(item,1);

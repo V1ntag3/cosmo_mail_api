@@ -13,6 +13,25 @@ public class Mensagem {
     public int[] mensagens;
     private Boolean apagado_destinatario;
     private Boolean apagado_remetente;
+    private String nome_destinatario;
+
+    public String getNome_remetente() {
+        return nome_remetente;
+    }
+
+    public void setNome_remetente(String nome_remetente) {
+        this.nome_remetente = nome_remetente;
+    }
+
+    private String nome_remetente;
+
+    public String getNome_destinatario() {
+        return nome_destinatario;
+    }
+
+    public void setNome_destinatario(String nome_destinatario) {
+        this.nome_destinatario = nome_destinatario;
+    }
 
     public Integer getId() {
         return id;
