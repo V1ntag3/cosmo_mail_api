@@ -122,7 +122,6 @@ public class MensagemResource {
     public Response delete(Mensagem men) {
 
         try {
-            System.out.println(men.getApagado_destinatario());
             if (men.getApagado_destinatario() == true) {
                 for (Integer item : men.mensagens) {
                     _repositorio_men.deletarMensagem(item,1);
