@@ -3,8 +3,10 @@ package br.com.email_jax_ws.model;
 import java.sql.Date;
 
 public class Mensagem {
+    private Integer resposta;
     private Integer id;
     private Date data;
+    private String data_string;
     private Integer remetente_id;
     private Integer destinatario_id;
     private String assunto;
@@ -14,6 +16,24 @@ public class Mensagem {
     private Boolean apagado_destinatario;
     private Boolean apagado_remetente;
     private String nome_destinatario;
+    
+    public Integer getResposta() {
+        return resposta;
+    }
+
+    public void setResposta(Integer resposta) {
+        this.resposta = resposta;
+    }
+
+    public String getData_string() {
+        return data_string;
+    }
+
+    public void setData_string(String data_string) {
+        this.data_string = data_string;
+    }
+
+
 
     public String getNome_remetente() {
         return nome_remetente;

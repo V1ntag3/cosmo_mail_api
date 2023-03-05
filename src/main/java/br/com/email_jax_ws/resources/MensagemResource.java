@@ -74,7 +74,7 @@ public class MensagemResource {
                 response += ",{\"id\" :" + mensagem.getId() + ", \"assunto\": \"" + mensagem.getAssunto()
                         + "\",\"corpo\": \"" + mensagem.getCorpo() + "\", \"data\": \" " + mensagem.getData()
                         + "\",\"email_dest\": \"" + mensagem.getEmail_destinatario() + "\",\"id_destinatario\": "
-                        + mensagem.getDestinatario_id() + ",\"id_remetente\": " + mensagem.getRemetente_id() + ",\"nome_remetente\": \"" + mensagem.getNome_remetente() +"\" ,\"nome_destinatario\": \"" + mensagem.getNome_destinatario() +"\"}";
+                        + mensagem.getDestinatario_id() + ",\"id_remetente\": " + mensagem.getRemetente_id()+ ",\"data_time\": \"" + mensagem.getData_string() + "\" ,\"nome_remetente\": \"" + mensagem.getNome_remetente() +"\" ,\"nome_destinatario\": \"" + mensagem.getNome_destinatario() +"\"}";
             }
         }
         response += "]}";
@@ -102,7 +102,7 @@ public class MensagemResource {
                 response += ",{\"id\" :" + mensagem.getId() + ", \"assunto\": \"" + mensagem.getAssunto()
                         + "\",\"corpo\": \"" + mensagem.getCorpo() + "\", \"data\": \" " + mensagem.getData()
                         + "\",\"email_dest\": \"" + mensagem.getEmail_destinatario() + "\",\"id_destinatario\": "
-                        + mensagem.getDestinatario_id() + ",\"id_remetente\": " + mensagem.getRemetente_id() +",\"nome_remetente\": \"" + mensagem.getNome_remetente() +"\",\"nome_destinatario\": \"" + mensagem.getNome_destinatario() + "\"}";
+                        + mensagem.getDestinatario_id() + ",\"id_remetente\": " + mensagem.getRemetente_id() +",\"nome_remetente\": \"" + mensagem.getNome_remetente()+ "\" ,\"data_time\": \"" + mensagem.getData_string() +"\",\"nome_destinatario\": \"" + mensagem.getNome_destinatario() + "\"}";
             }
         }
         response += "]}";
