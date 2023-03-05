@@ -120,11 +120,9 @@ public class DAOMensagem {
         try {
 
             ResultSet rs = ps.executeQuery(sql);
-            System.out.println(rs);
             while (rs.next()) {
                 Mensagem msg = new Mensagem();
                 msg.setId(rs.getInt("id"));
-                System.out.println(rs.getInt("id"));
                 msg.setDestinatario_id(rs.getInt("destinatario_id"));
                 msg.setRemetente_id(rs.getInt("remetente_id"));
                 msg.setAssunto(rs.getString("assunto"));
