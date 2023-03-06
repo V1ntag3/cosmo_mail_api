@@ -146,8 +146,7 @@ public class DAOUsuario {
         PreparedStatement ps = con.prepareStatement(sql);
 
         try {
-            ps.setString(1, email);
-            ps.setInt(2, id);
+
             ps.execute();
 
             return true;
@@ -170,8 +169,7 @@ public class DAOUsuario {
         PreparedStatement ps = con.prepareStatement(sql);
 
         try {
-            ps.setString(1, telefone);
-            ps.setInt(2, id);
+
             ps.execute();
 
             return true;
@@ -194,8 +192,6 @@ public class DAOUsuario {
         PreparedStatement ps = con.prepareStatement(sql);
 
         try {
-            ps.setString(1, senha);
-            ps.setInt(2, id);
             ps.execute();
 
             return true;
@@ -219,7 +215,6 @@ public class DAOUsuario {
 
         try {
 
-            ps.setInt(1, id);
             ps.execute();
 
             return true;
