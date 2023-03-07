@@ -127,7 +127,7 @@ public class UsuarioResource {
     @Path("delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("id") int id) {
-
+        
         try {
             if (_repositorio.deletarUsuario(id)) {
                 return Response.status(Response.Status.OK).entity("Usuário deletado com sucesso").build();
